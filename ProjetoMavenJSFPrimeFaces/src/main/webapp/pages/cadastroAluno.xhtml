@@ -33,18 +33,57 @@
        </h:form>
 	
    <p:dataTable value="#{alunoManagedBean.alunos}"
-                var="aux"
+                var="f"
                 id="tabelaAluno"
    >
       <p:column headerText="#{msg['pages.cadastroAluno.matricula']}">
-        <p:outputLabel value="#{aux.matricula}" />
+        <p:outputLabel value="#{f.matricula}" />
       </p:column>
       <p:column headerText="#{msg['pages.cadastroAluno.nome']}">
-        <p:outputLabel value="#{aux.nome}" />
+        <p:outputLabel value="#{f.nome}" />
       </p:column>
       <p:column headerText="#{msg['pages.cadastroAluno.curso']}">
-        <p:outputLabel value="#{aux.curso}" />
+        <p:outputLabel value="#{f.curso}" />
       </p:column>
+      
+      <p:ajax event="rowSelect"   listener="#{alunoManagedBean.onRowSelect}" update=":formAluno" />
+           <p:ajax event="rowUnselect" listener="#{alunoManagedBean.onRowUnselect}" update=":formAluno" />
+
+			<p:column headerText="Matricula">
+				<h:outputText value="#{f.matricula}" />
+			</p:column>
+
+			<p:column headerText="Nome: ">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.nome}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInput" value="#{f.nome}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+
+			<p:column headerText="Curso: ">
+				<p:cellEditor>
+					<f:facet name="output">
+						<p:outputLabel value="#{f.curso}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText id="modelInputo" value="#{f.curso}"
+							style="width:100%" />
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column style="width:70px" headerText="Opções">
+					<p:rowEditor />
+					<p:commandLink id="remover" styleClass="ui-icon ui-icon-trash"
+						style="text-align:center"
+						actionListener="#{alunoManagedBean.remover(f)}"
+						update=":tabelaAluno" />
+			</p:column>
       
    </p:dataTable>	
 	   
